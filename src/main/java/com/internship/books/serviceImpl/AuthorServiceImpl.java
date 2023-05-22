@@ -1,11 +1,13 @@
 package com.internship.books.serviceImpl;
 
 import com.internship.books.entities.Author;
+import com.internship.books.exception.NotAllowedException;
 import com.internship.books.repository.AuthorRepository;
 import com.internship.books.services.AuthorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -41,6 +43,24 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteAuthor(Integer id) {
+        List<Map<String, Object>> getAuthors = this.authorRepository.getAuthorsByBook(id);
+        System.out.println(getAuthors);
+        if (getAuthors.size() >= 1) {
+            throw new NotAllowedException();
+        }
+
         this.authorRepository.deleteById(id);
     }
+
+    @Override
+    public List<Map<String, Object>> getAvgRating() {
+        return this.authorRepository.getAvgRating();
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getAvgPrice() {
+        return this.authorRepository.getAvgPrice();
+    }
+
 }

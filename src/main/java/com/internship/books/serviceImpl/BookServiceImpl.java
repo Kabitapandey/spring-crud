@@ -3,6 +3,10 @@ package com.internship.books.serviceImpl;
 import com.internship.books.entities.Book;
 import com.internship.books.repository.BookRepository;
 import com.internship.books.services.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +32,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Page<Book> paginationBooks(Integer size, Integer pageNo) {
+        if (pageNo == null || size == null) {
+            pageNo = 0;
+            size = 1;
+        }
+
+        Pageable page = PageRequest.of(pageNo, size, Sort.by("id")
+                .ascending());
+
+        return this.bookRepository.findAll(page);
+    }
+
+    @Override
     public Book updateBook(Book book, Integer id) {
         Book books = this.bookRepository.findById(id)
                 .orElseThrow(null);
@@ -46,6 +63,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBook(Integer id) {
+        Book book = this.bookRepository.findById(id)
+                .orElseThrow();
         this.bookRepository.deleteById(id);
     }
+
 }

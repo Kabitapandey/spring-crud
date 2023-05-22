@@ -9,7 +9,7 @@ import java.util.List;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
 
     private String firstName;
 
@@ -22,11 +22,11 @@ public class Author {
     private List<Book> books;
 
     public int getId() {
-        return this.Id;
+        return this.id;
     }
 
     public void setId(int id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public String getFirstName() {

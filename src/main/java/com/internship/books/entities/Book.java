@@ -8,7 +8,7 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
 
     private String isbnNumber;
 
@@ -23,17 +23,17 @@ public class Book {
     @ManyToMany
     @JoinTable(
             name = "book_authors",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private List<Author> author;
 
     public int getId() {
-        return this.Id;
+        return this.id;
     }
 
     public void setId(int id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public String getIsbnNumber() {

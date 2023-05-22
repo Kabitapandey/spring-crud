@@ -48,4 +48,14 @@ public class AuthorController {
         this.authorService.deleteAuthor(id);
         return response;
     }
+
+    @GetMapping("/author/rating")
+    public List<Map<String, Object>> getAuthorRating() {
+        return this.authorService.getAvgRating();
+    }
+
+    @GetMapping("/author/price")
+    public List<Map<String, Object>> getAuthorPrice() {
+        return this.authorService.getAvgPrice();
+    }
 }

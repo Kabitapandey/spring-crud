@@ -1,11 +1,13 @@
 package com.internship.books.controller;
 
 import com.internship.books.entities.Book;
-import com.internship.books.payload.ApiResponse;
 import com.internship.books.services.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController()
 @RequestMapping("/api")
@@ -22,7 +24,7 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public List<Book> getBooks() {
+    public List<Book> books() {
         return this.bookService.listBooks();
     }
 
@@ -32,8 +34,17 @@ public class BookController {
     }
 
     @DeleteMapping("/books/{id}")
-    public ApiResponse deleteBook(@PathVariable Integer id) {
+    public Map<String, String> deleteBook(@PathVariable Integer id) {
+        Map<String, String> response = new HashMap<>();
+        response.put("msg", "Author deleted successfully");
+        response.put("success", "true");
         this.bookService.deleteBook(id);
-        return new ApiResponse("Book deleted successfully!", 200);
+        return response;
     }
+
+    @GetMapping("/books/pagination")
+    public Page<Book> getPaginatedBooks(@RequestParam(required = false) Integer pageNo, @RequestParam(required = false) Integer size) {
+        return this.bookService.paginationBooks(size, pageNo);
+    }
+
 }
